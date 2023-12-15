@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:16.1
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=contacts
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  contact-app:
+    image: contact-app
+    build: ..
+    ports:
+      - "8081:8081"
+    environment:
+      - DATABASE_URL=jdbc:postgresql://postgres:5432/contacts
+      - APP_INIT_CONTACTS=true
+      - APP_USE_JOOQ=false
+    depends_on:
+      - postgres

@@ -1,0 +1,15 @@
+server:
+    port: 8081
+
+spring:
+    datasource:
+        url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/contacts}
+        username: postgres
+        password: admin
+        hikari:
+            schema: contacts_schema
+
+app:
+    init:
+        contacts: ${APP_INIT_CONTACTS:true}
+    jooq: ${APP_USE_JOOQ:false}
